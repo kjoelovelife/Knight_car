@@ -24,6 +24,8 @@ Navigation Demo Video: https://www.youtube.com/watch?v=UlBHKnV47X4
 
 *Pou-Chun, Kung (k3083518729@gmail.com)
 
+## Collaborator
+
 *Wei-Chih, Lin (kjoelovelife@gmail.com)
 
 ## Usage & Tutorial

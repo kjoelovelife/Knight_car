@@ -23,6 +23,7 @@ Navigation Demo Video: https://www.youtube.com/watch?v=UlBHKnV47X4
 ## Developer
 
 *Pou-Chun, Kung (k3083518729@gmail.com)
+
 *Wei-Chih, Lin (kjoelovelife@gmail.com)
 
 ## Usage & Tutorial

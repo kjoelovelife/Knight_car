@@ -27,7 +27,12 @@ sudo apt install -y \
     python-dev \
     ipython \
     python-sklearn \
-    python-smbus
+    python-smbus \
+    libmrpt-dev \
+    mrpt-apps \
+    ros-kinetic-slam-gmapping \
+    ros-kinetic-map-server \
+    ros-kinetic-navigation
 
 sudo apt remove -y \
 	python-ruamel.yaml \

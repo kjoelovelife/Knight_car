@@ -3,10 +3,16 @@
 import rospy
 from std_msgs.msg import String
 
+## set pin about LED color
+red   = 4
+green = 18
+blue  = 22
+
+
 def callback(data):
     select_color = data.data
-    trigger = { 'R': (2,1),'G': (3,1),'B': (4,1),'r': (2,1),'g': (3,1),'b': (4,1) }
-    close   = {'C':(9,10,11,0),'c':(9,10,11,0)}
+    trigger = { 'R': (red,1),'G': (green,1),'B': (blue,1),'r': (red,1),'g': (green,1),'b': (blue,1) }
+    close   = {'C':(red,green,blue,0),'c':(red,green,blue,0)}
     if select_color in trigger.keys() :
         print 'The color is {} and Pin is {} '.format(select_color, trigger[select_color][0]) 
         pin   = trigger[select_color][0]

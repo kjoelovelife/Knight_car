@@ -13,10 +13,12 @@ from __builtin__ import True
 class CmdMapper(object):
     def __init__(self):
         self.node_name = rospy.get_name()
+        self.param_veh = rospy.get_param("~/param_veh", 'knightcar')
+        self.pub_topic_name = "/" + self.param_veh + "/joy_mapper_node/car_cmd"
         rospy.loginfo("[%s] Initializing " %(self.node_name))
         
         # Publications
-        self.pub_car_cmd = rospy.Publisher("/knightcar/joy_mapper_node/car_cmd", Twist2DStamped, queue_size=1)
+        self.pub_car_cmd = rospy.Publisher(self.pub_topic_name, Twist2DStamped, queue_size=1)
 
         # Subscriptions
         self.sub_cmd_ = rospy.Subscriber("/cmd_vel", Twist, self.cbCmd, queue_size=1)

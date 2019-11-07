@@ -1,0 +1,15 @@
+<launch>
+
+    <arg name="pkg_name" value="meArm">
+    <arg name="name_scope" value="meArm">
+
+    <!-- joy -->
+    <node ns="$(arg name_scope)" pkg="joy" type="joy_node" name="joy" output="screen">
+        <rosparam command="load" file="$(find pkg_name)/param/joy_default.yaml)">
+    </node>
+
+    <!-- joy_mapper -->
+    <include file="$(find pkg_name)/launch/joy_mapper_meArm.launch">
+    </include>
+
+</launch>

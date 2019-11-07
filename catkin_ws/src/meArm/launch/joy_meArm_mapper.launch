@@ -1,0 +1,16 @@
+<launch>
+
+        <arg name="pkg_name" value="meArm"> 
+        <arg name="name_scope" value="meArm">
+        <arg name="node_name" value="joy_mearm_mapper">
+
+	<!-- Run on local (laptop) -->
+	<node ns="$(arg name_scope)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" clear_params="true" required="true">
+	    <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+	</node>
+
+	<!-- Subscribe Topics -->
+	<!-- "joy": sensor_msgs/Joy. The command read from joystick -->
+	<!-- Publish Topics -->
+	<!-- "~wheels_cmd": duckietown_msgs/WheelsCmd. Wheels command for duckiebot -->
+</launch>

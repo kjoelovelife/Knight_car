@@ -16,7 +16,7 @@ servo_parameter = {
                    servo_parameter_text[0]    : 50   ,  # frequency
                    servo_parameter_text[1]    : 2.5  ,  # pulse max
                    servo_parameter_text[2]    : 0.5  ,  # pulse min
-                   servo_parameter_text[3]    : 150.0,  # angle max
+                   servo_parameter_text[3]    : 130.0,  # angle max
                    servo_parameter_text[4]    : 0.0  ,  # angle min
                    servo_parameter_text[5]    : 0.5  ,  # exercise time
                    servo_parameter_text[6]    : 40.0 ,  # bottom angle

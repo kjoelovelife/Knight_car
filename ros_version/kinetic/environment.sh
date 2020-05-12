@@ -12,7 +12,7 @@ export ROS_HOSTNAME=$HOSTNAME.local
 export DUCKIETOWN_ROOT=$HOME/Knight_car
 
 echo "Building machines file..."
-make -C  $DUCKIETOWN_ROOT
+make -C  $DUCKIETOWN_ROOT/ros_version/kinetic
 echo "...done"
 echo "Activating development."
 source $DUCKIETOWN_ROOT/catkin_ws/devel/setup.bash

@@ -34,11 +34,19 @@ sudo apt install -y \
     mrpt-apps \
     ros-melodic-slam-gmapping \
     ros-melodic-map-server \
-    ros-melodic-navigation
+    ros-melodic-navigation \
+    i2c-tools \
+    mosquitto-clients \
+    python-pip \
+    python3-pip
 
 sudo apt remove -y \
 	python-ruamel.yaml \
 	python-ruamel.ordereddict
+
+#sudo chgrp i2c /dev/i2c-1
+#sudo chmod 666 /dev/i2c-1
+sudo usermod -G i2c $USER
 
 # These don't have an APT package
 

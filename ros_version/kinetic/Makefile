@@ -1,7 +1,7 @@
 
 catkin_ws := catkin_ws
-scuderia := scuderia.yaml
-machines := $(catkin_ws)/src/duckietown/machines
+scuderia := $(HOME)/Knight_car/scuderia.yaml
+machines := $(HOME)/Knight_car/$(catkin_ws)/src/duckietown/machines
 
 all: $(machines)
 

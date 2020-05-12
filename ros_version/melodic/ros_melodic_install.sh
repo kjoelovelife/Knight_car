@@ -38,7 +38,7 @@ sudo apt-get update
 
 sudo apt-get install -y ros-melodic-desktop-full
 
-echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 sudo apt-get install -y python-rosinstall python-rosinstall-generator python-wstool build-essential

@@ -13,7 +13,7 @@ class WheelsDriverNode(object):
         self.baud = 115200
 
         # Setup publishers
-        self.driver = smart_robotV12(port,baud)
+        self.driver = smart_robotV12(self.port,self.baud)
         self.driver.connect()
         self.driver.set_mode(3) ## Start smartbot and choose " 0 :omnibot" , 1:Mecanum ,2: normal motor with encoder , 3: normal motor without encoder"
         

@@ -88,6 +88,7 @@ class smart_robotV12:
         #time.sleep(5)
         if self.connected == True:
             self.device.write(start_cmd)
+            self.device.write(start_cmd)
             time.sleep(0.5)
 
     # send vel_cmd[Vx,Vy,Vz]
@@ -272,32 +273,35 @@ class smart_robotV12:
         max_speed = 10000
         min_speed = 0
         reverse = { "right":0,"left":0,"value":0 }
-        fricition_limit = 400
-        gain = 100
+        fricition_limit = 0
+        gain = 2000
+
+        print("left motor : {} , right motor : {}".format( left , right ))
 
         ## setting up reverse
-        if left >= 0:
-            reverse["left"] = math.pow(2,0)
+        if left > 0:
+            reverse["left"] = 0
         else: 
-            reverse["left"] = math.pow(2,2)
-        if right >= 0 :
-            reverse["right"] = 1
+            reverse["left"] = math.pow(2,2) + math.pow(2,3)
+        if right > 0 :
+            reverse["right"] = 0
         else:
-            reverse["right"] = 3
+            reverse["right"] = math.pow(2,0) + math.pow(2,1)
        
         reverse["value"] = reverse["left"] + reverse["right"]
-        print("Direction : {}".format(reverse["value"]))
+        print("Direction : {}".format(reverse))
 
         ## setting up wheel velocity
         left  = int( abs( (left  * gain) + fricition_limit ) )
         right = int( abs( (right * gain) + fricition_limit ) )
+        
 
         speed = bytearray(b'\xFF\xFE')
-        speed.append(0x01)
+        speed.append(0x02)
         speed += struct.pack('>h',self.clamp( left , min_speed, max_speed ))  # 2-bytes , velocity for V1
         speed += struct.pack('>h',self.clamp( right, min_speed, max_speed ))  # 2-bytes , velocity for V2
-        speed += struct.pack('>h',self.clamp( left , min_speed, max_speed ))  # 2-bytes , velocity for V3
-        speed += struct.pack('>h',self.clamp( right, min_speed, max_speed ))  # 2-bytes , velocity for V4    
+        speed += struct.pack('>h',self.clamp( right, min_speed, max_speed ))  # 2-bytes , velocity for V3
+        speed += struct.pack('>h',self.clamp( left , min_speed, max_speed ))  # 2-bytes , velocity for V4    
         
         # 1-bytes , direction for x(bit2) ,y(bit1) ,z(bit0) ,and 0 : normal , 1 : reverse
         speed += struct.pack('>b',reverse["value"])  
@@ -305,7 +309,7 @@ class smart_robotV12:
         print(binascii.hexlify(speed))
         if self.connected == True:       
             self.device.write(speed)
-            print("Reverse: {}".format(reverse))
+            #print("Reverse: {}".format(reverse))
 
 
     def set_speed_limit(self , speed_limit):
@@ -393,7 +397,7 @@ class smart_robotV12:
     # imu_calibration : 0 -> not ot do , 1 -> do it
     # command         : 0 -> control   , 1 -> APP
     #================================================
-    def set_system_mode(self,imu_reverse=0,reverse=0,encoder_reverse=0,motor_reverse=0,command=0,encoder_recieve=0,imu_calibration=0,mode=0)      
+    def set_system_mode(self,imu_reverse=0,reverse=0,encoder_reverse=0,motor_reverse=0,command=0,encoder_recieve=0,imu_calibration=0,mode=0):      
         # calculate
         value = {}
         value["mode"] = mode      

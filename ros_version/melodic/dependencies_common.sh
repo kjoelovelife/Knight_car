@@ -35,6 +35,7 @@ sudo apt install -y \
     ros-melodic-slam-gmapping \
     ros-melodic-map-server \
     ros-melodic-navigation \
+    ros-melodic-joy \
     i2c-tools \
     mosquitto-clients \
     python-pip \
@@ -47,6 +48,13 @@ sudo apt remove -y \
 #sudo chgrp i2c /dev/i2c-1
 #sudo chmod 666 /dev/i2c-1
 sudo usermod -G i2c $USER
+
+# set ominibot
+sudo cp ominibot.rules /etc/udev/rules.d
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+
 
 # These don't have an APT package
 

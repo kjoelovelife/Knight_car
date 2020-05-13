@@ -53,12 +53,16 @@ sudo usermod -G i2c $USER
 
 # set ominibot
 sudo cp ominibot.rules /etc/udev/rules.d
-sudo udevadm control --reload-rules
-sudo udevadm trigger
+
 
 # download vision_opencv
 git clone https://github.com/ros-perception/vision_opencv ~/Knight_car/catkin_ws/src/vision_opencv
 
+# configure ydlidar
+sudo sh ~/Knight_car/catkin_ws/src/ydlidar/startup/initrnv.sh
+
+sudo udevadm control --reload-rules
+sudo udevadm trigger
 
 # These don't have an APT package
 

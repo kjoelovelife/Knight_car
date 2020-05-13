@@ -6,10 +6,10 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
-#set -x
 
-#sudo apt install -y bibtex2html 
-#sudo snap install pdftk
+#set -x
+sudo apt install -y bibtex2html 
+sudo snap install pdftk
 
 sudo apt install -y \
 	python-frozendict \

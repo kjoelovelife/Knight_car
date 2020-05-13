@@ -17,7 +17,7 @@ echo "...done"
 echo "Activating development."
 source $DUCKIETOWN_ROOT/catkin_ws/devel/setup.bash
 
-sudo udevadm trigger
+#sudo udevadm trigger
 
 # TODO: check that the time is >= 2015
 

@@ -54,6 +54,8 @@ sudo cp ominibot.rules /etc/udev/rules.d
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 
+# download vision_opencv
+git clone https://github.com/ros-perception/vision_opencv ~/Knight_car/catkin_ws/src/vision_opencv
 
 
 # These don't have an APT package

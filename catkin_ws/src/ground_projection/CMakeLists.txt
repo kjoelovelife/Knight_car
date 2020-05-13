@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 # opencv need : 3.3.1
-find_package(OpenCV 3.3.1 REQUIRED)
+find_package(OpenCV 3.2.0 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS filesystem)
 find_package(PkgConfig)
 

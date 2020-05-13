@@ -41,6 +41,8 @@ sudo apt install -y \
     python-pip \
     python3-pip
 
+sudo python -m pip install --upgrade -pip
+
 sudo apt remove -y \
 	python-ruamel.yaml \
 	python-ruamel.ordereddict

@@ -1,6 +1,8 @@
 local_costmap:
-    footprint: [[-0.305, -0.18], [-0.305, 0.18], [0.305, 0.18], [0.305, -0.18]]
-    footprint_padding: 0.01
+    footprint: [[-0.105, -0.085], [-0.105, 0.085], [0.105, 0.085], [0.105, -0.085]]
+    footprint_padding: 0.001
+    robot_radius: 0.15
+    inflation_radius: 0.3
     transform_tolerance: 1.0
     update_frequency: 10.0
     publish_frequency: 10.0

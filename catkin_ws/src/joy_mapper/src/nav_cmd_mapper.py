@@ -13,7 +13,7 @@ from __builtin__ import True
 class CmdMapper(object):
     def __init__(self):
         self.node_name = rospy.get_name()
-        self.param_veh = rospy.get_param("~/param_veh", 'knightcar')
+        self.param_veh = rospy.get_param("~/param_veh", 'pimar')
         self.pub_topic_name = "/" + self.param_veh + "/joy_mapper_node/car_cmd"
         rospy.loginfo("[%s] Initializing " %(self.node_name))
         
@@ -25,12 +25,12 @@ class CmdMapper(object):
         
         # timer
         self.param_timer = rospy.Timer(rospy.Duration.from_sec(1.0),self.cbParamTimer)
-        self.v_gain = self.setupParam("~speed_gain", 1) #0.41
-        self.omega_gain = self.setupParam("~steer_gain", 3.3) #8.3
+        self.v_gain = self.setupParam("~speed_gain", 60) #0.41
+        self.omega_gain = self.setupParam("~steer_gain", 60) #8.3
 
     def cbParamTimer(self,event):
-        self.v_gain = rospy.get_param("~speed_gain", 1.0)
-        self.omega_gain = rospy.get_param("~steer_gain", 3.3)
+        self.v_gain = rospy.get_param("~speed_gain", 60)
+        self.omega_gain = rospy.get_param("~steer_gain", 60)
 
     def setupParam(self,param_name,default_value):
         value = rospy.get_param(param_name,default_value)

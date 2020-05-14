@@ -5,8 +5,8 @@ local_costmap:
     update_frequency: 10.0
     publish_frequency: 10.0
 
-    global_frame: /odom
-    robot_base_frame: /base_footprint
+    global_frame: odom
+    robot_base_frame: base_footprint
     resolution: 0.05
     static_map: false
     rolling_window: true
@@ -17,6 +17,7 @@ local_costmap:
     plugins:            
         - {name: sensor,    type: "costmap_2d::ObstacleLayer"}
         - {name: inflation, type: "costmap_2d::InflationLayer"}
+        - {name: static_map,type: "costmap_2d::StaticLayer"}
 
     sensor:
         observation_sources: laser_scan_sensor

@@ -1,7 +1,7 @@
 global_costmap:
     footprint: [[-0.305, -0.18], [-0.305, 0.18], [0.305, 0.18], [0.305, -0.18]]
     footprint_padding: 0.01
-    transform_tolerance: 1.0
+    transform_tolerance: 1.5
     update_frequency: 5.0
     publish_frequency: 5.0
 

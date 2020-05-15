@@ -14,8 +14,8 @@
 
 	<include unless="$(arg local)" file="$(find duckietown)/machines"/>
 	<node unless="$(arg local)" machine="$(arg veh)" pkg="joy_mapper" type="nav_cmd_mapper.py" name="nav_cmd_mapper" output="screen" clear_params="true" required="true">
-            <param name="speed_gain" type="double" value="30.0"/>
-            <param name="steer_gain" type="double" value="30.0"/>
+            <param name="speed_gain" type="double" value="15.0"/>
+            <param name="steer_gain" type="double" value="60.0"/>
 	</node>	
 
     <!-- run inverse_kinematics_node -->

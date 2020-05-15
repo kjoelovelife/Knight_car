@@ -11,7 +11,7 @@
 #
 #    * Redistributions of source code must retain the above copyright
 #      notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above copyright
+#    * Redistributi ons in binary form must reproduce the above copyright
 #      notice, this list of conditions and the following disclaimer in the
 #      documentation and/or other materials provided with the distribution.
 #    * Neither the name of the Willow Garage, Inc. nor the names of its
@@ -45,7 +45,6 @@ class smart_robotV12:
         self.param["device_port"] = port
         self.param["baudrate"]    = baud
         self.imu_decode = {"accel":[0,0,0] , "gyro":[0,0,0]} 
-        self.imu_decode = {"accel":[0,0,0] , "gyro":[0,0,0]}
         self.odom_decode = [0,0,0]
         self.odom_seq = 0
         self.cmd_decode = [0 ,0 ,0]
@@ -483,7 +482,14 @@ class smart_robotV12:
             for index in range(1,25,1):
                 respond.append(binascii.hexlify(self.device.read(1)))
             #respond = self.device.readlines()
-            print("System mode : {}" .format(respond))
+            #print("System mode : {}" .format(respond))
+            self.imu_decode["accel"][0] = struct.unpack('>h',respond[2:4])[0]
+            self.imu_decode["accel"][1] = struct.unpack('>h',respond[6:8])[0]
+            self.imu_decode["accel"][2] = struct.unpack('>h',respond[10:12])[0]
+            self.imu_decode["gyro"][0] = struct.unpack('>h',respond[14:16])[0]
+            self.imu_decode["gyro"][1] = struct.unpack('>h',respond[18:20])[0]
+            self.imu_decode["gyro"][2] = struct.unpack('>h',respond[22:24])[0]
+            print("imu: {}".format(imu_decode))
 
 
      

@@ -273,7 +273,7 @@ class smart_robotV12:
         min_speed = 0
         reverse = { "right":0,"left":0,"value":0 }
         fricition_limit = 0
-        gain = 2000
+        limit = 20000
 
         print("left motor : {} , right motor : {}".format( left , right ))
 
@@ -283,16 +283,17 @@ class smart_robotV12:
         else: 
             reverse["left"] = math.pow(2,2) + math.pow(2,3)
         if right > 0 :
-            reverse["right"] = 0
-        else:
             reverse["right"] = math.pow(2,0) + math.pow(2,1)
+        else:
+            reverse["right"] = 0
        
         reverse["value"] = reverse["left"] + reverse["right"]
         print("Direction : {}".format(reverse))
 
         ## setting up wheel velocity
-        left  = int( abs( (left  * gain) + fricition_limit ) )
-        right = int( abs( (right * gain) + fricition_limit ) )
+        left  = int( abs( (left  * limit) + fricition_limit ) )
+        right = int( abs( (right * limit) + fricition_limit ) )
+        print(" right_speed : {} , left_speed : {} ".format( right,left ) )
         
 
         speed = bytearray(b'\xFF\xFE')

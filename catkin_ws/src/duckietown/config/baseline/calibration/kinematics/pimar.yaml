@@ -1,6 +1,6 @@
 baseline: 0.1
-calibration_time: 2020-05-15-10-56-42
-gain: 1.0
+calibration_time: 2020-05-28-11-27-25
+gain: 0.5
 k: 27.0
 limit: 1.0
 radius: 0.0318

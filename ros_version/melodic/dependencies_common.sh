@@ -36,6 +36,7 @@ sudo apt install -y \
     ros-melodic-map-server \
     ros-melodic-navigation \
     ros-melodic-joy \
+    ros-melodic-teleop-twist-keyboard \
     i2c-tools \
     python-pip \
     python3-pip \

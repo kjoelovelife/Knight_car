@@ -275,7 +275,7 @@ class smart_robotV12:
         fricition_limit = 0
         limit = 20000
 
-        print("left motor : {} , right motor : {}".format( left , right ))
+        #print("left motor : {} , right motor : {}".format( left , right ))
 
         ## setting up reverse
         if left > 0:
@@ -288,12 +288,12 @@ class smart_robotV12:
             reverse["right"] = 0
        
         reverse["value"] = reverse["left"] + reverse["right"]
-        print("Direction : {}".format(reverse))
+        #print("Direction : {}".format(reverse))
 
         ## setting up wheel velocity
         left  = int( abs( (left  * limit) + fricition_limit ) )
         right = int( abs( (right * limit) + fricition_limit ) )
-        print(" right_speed : {} , left_speed : {} ".format( right,left ) )
+        #print(" right_speed : {} , left_speed : {} ".format( right,left ) )
         
 
         speed = bytearray(b'\xFF\xFE')
@@ -306,7 +306,7 @@ class smart_robotV12:
         # 1-bytes , direction for x(bit2) ,y(bit1) ,z(bit0) ,and 0 : normal , 1 : reverse
         speed += struct.pack('>b',reverse["value"])  
         # debug
-        print(binascii.hexlify(speed))
+        #print(binascii.hexlify(speed))
         if self.connected == True:       
             self.device.write(speed)
             #print("Reverse: {}".format(reverse))

@@ -11,9 +11,8 @@ class JoyMapper(object):
     def __init__(self):
         self.node_name = rospy.get_name()
         rospy.loginfo("[%s] Initializing " %(self.node_name))
-        
-        self.joy = None
-        self.last_pub_msg = None
+        #self.joy = None
+        #self.last_pub_msg = None
         self.last_pub_time = rospy.Time.now()
 
 
@@ -71,11 +70,11 @@ class JoyMapper(object):
         if self.bicycle_kinematics:
             # Implements Bicycle Kinematics - Nonholonomic Kinematics
             # see https://inst.eecs.berkeley.edu/~ee192/sp13/pdf/steer-control.pdf
-            steering_angle = self.joy.axes[3] * self.steer_angle_gain
+            steering_angle = self.joy.axes[2] * self.steer_angle_gain
             car_cmd_msg.omega = car_cmd_msg.v / self.simulated_vehicle_length * math.tan(steering_angle)
         else:
             # Holonomic Kinematics for Normal Driving
-            car_cmd_msg.omega = self.joy.axes[3] * self.omega_gain
+            car_cmd_msg.omega = self.joy.axes[2] * self.omega_gain
         self.pub_car_cmd.publish(car_cmd_msg)
 
 # Button List index of joy.buttons array:
@@ -105,7 +104,7 @@ class JoyMapper(object):
             parallel_autonomy_msg.header.stamp = self.joy.header.stamp
             parallel_autonomy_msg.data = self.state_parallel_autonomy
             self.pub_parallel_autonomy.publish(parallel_autonomy_msg)
-        elif (joy_msg.buttons[3] == 1):
+        elif (joy_msg.buttons[2] == 1):
             anti_instagram_msg = BoolStamped()
             anti_instagram_msg.header.stamp = self.joy.header.stamp
             anti_instagram_msg.data = True

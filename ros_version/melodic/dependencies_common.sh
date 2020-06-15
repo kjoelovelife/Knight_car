@@ -54,7 +54,7 @@ sudo apt install -y \
 sudo usermod -aG i2c $USER
 
 # set ominibot
-sudo cp ominibot.rules /etc/udev/rules.d
+sudo cp ~/Knight_car/ros_version/melodic/ominibot.rules /etc/udev/rules.d
 
 
 # download vision_opencv
@@ -63,8 +63,8 @@ sudo cp ominibot.rules /etc/udev/rules.d
 # configure ydlidar
 sudo sh ~/Knight_car/catkin_ws/src/ydlidar/startup/initenv.sh
 
-#sudo udevadm control --reload-rules
-#sudo udevadm trigger
+sudo udevadm control --reload-rules
+sudo udevadm trigger
 
 # These don't have an APT package
 

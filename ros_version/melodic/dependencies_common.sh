@@ -9,7 +9,7 @@ fi
 
 #set -x
 sudo apt install -y bibtex2html 
-sudo snap install pdftk
+#sudo snap install pdftk
 
 sudo apt install -y \
 	python-frozendict \

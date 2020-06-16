@@ -8,6 +8,7 @@ fi
 
 
 #set -x
+sudo apt-get update
 sudo apt install -y bibtex2html 
 #sudo snap install pdftk
 
@@ -37,6 +38,7 @@ sudo apt install -y \
     ros-melodic-navigation \
     ros-melodic-joy \
     ros-melodic-teleop-twist-keyboard \
+    ros-melodic-cv-bridge \
     i2c-tools \
     python-pip \
     python3-pip \
@@ -57,14 +59,20 @@ sudo usermod -aG i2c $USER
 sudo cp ~/Knight_car/ros_version/melodic/ominibot.rules /etc/udev/rules.d
 
 
-# download vision_opencv
-#git clone https://github.com/ros-perception/vision_opencv ~/Knight_car/catkin_ws/src/vision_opencv
+
 
 # configure ydlidar
 sudo sh ~/Knight_car/catkin_ws/src/ydlidar/startup/initenv.sh
 
 sudo udevadm control --reload-rules
 sudo udevadm trigger
+
+# download vision_opencv if use jetson nano
+if [ "${hardware_platform}" == "aarch64"  ] ; then
+
+    git clone https://github.com/ros-perception/vision_opencv ~/Knight_car/catkin_ws/src/vision_opencv
+    
+fi
 
 # These don't have an APT package
 

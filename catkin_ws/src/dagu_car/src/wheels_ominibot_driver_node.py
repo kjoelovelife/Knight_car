@@ -15,8 +15,25 @@ class WheelsDriverNode(object):
         # Setup publishers
         self.driver = smart_robotV12(self.port,self.baud)
         self.driver.connect()
-        self.driver.set_mode(3) ## Start smartbot and choose " 0 :omnibot" , 1:Mecanum ,2: normal motor with encoder , 3: normal motor without encoder"
-        
+       
+        # set system node ===============================
+        # vehicle       (Bit0)  : 0 -> omnibot   ; 1 -> Mecanum ; 2 --> encoder , angle param and no imu(1C) ; 3 --> encoder , no angle parameter and no imu(1D) ; 
+        #                         4 -->  no encoder , angle param , and no imu(1D) ; 5 --> no encoder , no angle parameter , and no imu(1D)
+        # imu           (Bit3)  : 0 -> not to do , 1 -> do it
+        # imu_axis      (Bit4)  : 0 -> not to do , 1 -> do it
+        # return_encoder(Bit6)  : 0 -> not to do , 1 -> do it
+        # command       (Bit7)  : 0 -> control   , 1 -> APP
+        # motor_direct  (Bit8)  : 0 -> normal    , 1 -> reverse
+        # encoder_direct(Bit9)  : 0 -> normal    , 1 -> reverse
+        # turn_direct   (Bit10) : 0 -> normal    , 1 -> reverse
+        # imu_reverse   (Bit11) : 0 -> normal    , 1 -> reverse    
+        #================================================
+        self.driver.set_system_mode(vehicle=3,imu=0,
+                                    imu_axis=0,return_encoder=0,
+                                    command=0,motor_direct=0,
+                                    encoder_direct=1,turn_direct=0,
+                                    imu_reverse=0)
+
         #add publisher for wheels command wih execution time
         self.msg_wheels_cmd = WheelsCmdStamped()
         self.pub_wheels_cmd = rospy.Publisher("~wheels_cmd_executed",WheelsCmdStamped, queue_size=1)

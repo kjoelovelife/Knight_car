@@ -70,26 +70,6 @@ class smart_robotV12:
             self.device.close() 
             self.connected = False  
 
-    ## Start smartbot and choose " 0 :omnibot" , 1:Mecanum ,2: normal motor with encoder , 3: normal motor without encoder"
-    def set_mode(self, vehicle):
-        start_cmd = bytearray(b'\xFF\xFE')
-        start_cmd.append(0x80) # Tx[2]
-        start_cmd.append(0x80) # Tx[3]
-        start_cmd.append(0x09) # Tx[4]
-        start_cmd.append(0x00) # Tx[5]
-        start_cmd.append(0x00) # Tx[6]
-        start_cmd.append(0x00) # Tx[7]
-        start_cmd += struct.pack('>b', vehicle ) # 2-bytes , reserved bit
-        start_cmd.append(0x00) # Tx[9]                        
-	#debug
-	print("You set : {} ".format(binascii.hexlify(start_cmd)))
-        #print("Please Wait for 5 seconds...")
-        #time.sleep(5)
-        if self.connected == True:
-            self.device.write(start_cmd)
-            self.device.write(start_cmd)
-            time.sleep(0.5)
-
     # send vel_cmd[Vx,Vy,Vz]
     def vel(self, veh_cmd): 
       
@@ -278,12 +258,12 @@ class smart_robotV12:
         #print("left motor : {} , right motor : {}".format( left , right ))
 
         ## setting up reverse
-        if left > 0:
+        if left < 0:
             reverse["left"] = 0
         else: 
-            reverse["left"] = math.pow(2,2) + math.pow(2,3)
-        if right > 0 :
-            reverse["right"] = math.pow(2,0) + math.pow(2,1)
+            reverse["left"] = math.pow(2,1) + math.pow(2,3)
+        if right < 0 :
+            reverse["right"] = math.pow(2,0) + math.pow(2,2)
         else:
             reverse["right"] = 0
        
@@ -293,7 +273,7 @@ class smart_robotV12:
         ## setting up wheel velocity
         left  = int( abs( (left  * limit) + fricition_limit ) )
         right = int( abs( (right * limit) + fricition_limit ) )
-        #print(" right_speed : {} , left_speed : {} ".format( right,left ) )
+        print(" right_speed : {} , left_speed : {} ".format( right,left ) )
         
 
         speed = bytearray(b'\xFF\xFE')
@@ -301,7 +281,7 @@ class smart_robotV12:
         speed += struct.pack('>h',self.clamp( left , min_speed, max_speed ))  # 2-bytes , velocity for V1
         speed += struct.pack('>h',self.clamp( right, min_speed, max_speed ))  # 2-bytes , velocity for V2
         speed += struct.pack('>h',self.clamp( right, min_speed, max_speed ))  # 2-bytes , velocity for V3
-        speed += struct.pack('>h',self.clamp( left , min_speed, max_speed ))  # 2-bytes , velocity for V4    
+        speed += struct.pack('>h',self.clamp( left/10 , min_speed, max_speed ))  # 2-bytes , velocity for V4    
         
         # 1-bytes , direction for x(bit2) ,y(bit1) ,z(bit0) ,and 0 : normal , 1 : reverse
         speed += struct.pack('>b',reverse["value"])  
@@ -390,59 +370,43 @@ class smart_robotV12:
             print("You can restart OmniboardV12 now!")
 
 
+    # set system node ==============================
+    # vehicle       (Bit0)  : 0 -> omnibot   ; 1 -> Mecanum ; 2 --> encoder , angle param and no imu(1C) ; 3 --> encoder , no angle parameter and no imu(1D) ; 
+    #                         4 -->  no encoder , angle param , and no imu(1D) ; 5 --> no encoder , no angle parameter , and no imu(1D)
+    # imu           (Bit3)  : 0 -> not to do , 1 -> do it
+    # imu_axis      (Bit4)  : 0 -> not to do , 1 -> do it
+    # return_encoder(Bit6)  : 0 -> not to do , 1 -> do it
+    # command       (Bit7)  : 0 -> control   , 1 -> APP
+    # motor_direct  (Bit8)  : 0 -> normal    , 1 -> reverse
+    # encoder_direct(Bit9)  : 0 -> normal    , 1 -> reverse
+    # turn_direct   (Bit10) : 0 -> normal    , 1 -> reverse
+    # imu_reverse   (Bit11) : 0 -> normal    , 1 -> reverse    
     #================================================
-    # vehicle         : 0 -> omnibot   , 1 -> Mecanum , 2 --> no encoder and no imu , 3 --> no encoder and has imu
-    # motor           : 0 -> normal    , 1 -> reverse
-    # encode          : 0 -> normal    , 1 -> reverse
-    # imu_calibration : 0 -> not ot do , 1 -> do it
-    # command         : 0 -> control   , 1 -> APP
-    #================================================
-    def set_system_mode(self,imu_reverse=0,reverse=0,encoder_reverse=0,motor_reverse=0,command=0,encoder_recieve=0,imu_calibration=0,mode=0):      
+    def set_system_mode(self,vehicle=0,imu=0,imu_axis=0,return_encoder=0,command=0,motor_direct=0,encoder_direct=0,turn_direct=0,imu_reverse=0):      
         # calculate
-        value = {}
-        value["mode"] = mode      
-        if imu_calibration == 1:
-            value["imu_calibration"] = math.pow(2,3)
-        else:
-            value["imu_calibration"] = 0
-
-        if encoder_recieve == 1:
-            value["encoder_recieve"] = math.pow(2,6)
-        else:
-            value["encoder_recieve"] = 0
-
-        if command == 1:
-            value["command"] = math.pow(2,7)
-        else:
-            value["command"] = 0
-
-        if motor_reverse == 1:
-            value["motor_reverse"] = math.pow(2,8)
-        else:
-            value["motor_reverse"] = 0
-
-        if encoder_reverse == 1:
-            value["encoder_reverse"] = math.pow(2,9)
-        else:
-            value["encoder_reverse"] = 0
-
-        if reverse == 1:
-            value["reverse"] = math.pow(2,10)
-        else:
-            value["reverse"] = 0
-
-        if reverse == 1:
-            value["imu_reverse"] = math.pow(2,11)
-        else:
-            value["imu_reverse"] = 0
-
-        set_mode = value["mode"] + value["imu_calibration"] +  value["encoder_recieve"] + value["command"] + value["motor_reverse"] + value["encoder_reverse"] + value["reverse"] + value["imu_reverse"]
-        print("Mode : {}".format(mode))
+        key_word = ["vehicle","imu","imu_axis","return_encoder","command","motor_direct","encoder_direct","turn_direct","imu_reverse"]
+        parameter= [vehicle,imu,imu_axis,return_encoder,command,motor_direct,encoder_direct,turn_direct,imu_reverse]
+        calculate= {}  
+        calculate["vehicle"]            = lambda setting : setting
+        calculate["imu"]                = lambda setting : 0 if setting == 0 else math.pow(2,3)  
+        calculate["imu_axis"]           = lambda setting : 0 if setting == 0 else math.pow(2,4)
+        calculate["return_encoder"]     = lambda setting : 0 if setting == 0 else math.pow(2,6)
+        calculate["command"]            = lambda setting : 0 if setting == 0 else math.pow(2,7)
+        calculate["motor_direct"]       = lambda setting : 0 if setting == 0 else math.pow(2,8)
+        calculate["encoder_direct"]     = lambda setting : 0 if setting == 0 else math.pow(2,9)
+        calculate["turn_direct"]        = lambda setting : 0 if setting == 0 else math.pow(2,10)
+        calculate["imu_reverse"]        = lambda setting : 0 if setting == 0 else math.pow(2,11)
+        mode = 0
+        for index in range(len(key_word)):
+             mode += calculate[ key_word[index] ](parameter[index])
+        print(mode)
         cmd = bytearray(b'\xFF\xFE') # Tx[0] , Tx[1]
         cmd.append(0x80) # Tx[2]
         cmd.append(0x80) # Tx[3]
         cmd.append(0x09) # Tx[4]
-        cmd += struct.pack('>l',set_mode) # Tx[5],Tx[6],Tx[7] ,Tx[8]
+        cmd.append(0x00) # Tx[5]
+        cmd.append(0x00) # Tx[6]
+        cmd += struct.pack('>h',mode) # Tx[7] ,Tx[8]
         print("Omniboard write setting!")
         cmd.append(0x00) # Tx[9]
         if self.connected == True:       

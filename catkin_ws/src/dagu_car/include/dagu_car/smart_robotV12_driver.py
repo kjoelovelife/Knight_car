@@ -261,9 +261,9 @@ class smart_robotV12:
         if left < 0:
             reverse["left"] = 0
         else: 
-            reverse["left"] = math.pow(2,1) + math.pow(2,3)
+            reverse["left"] = math.pow(2,0) + math.pow(2,2)
         if right < 0 :
-            reverse["right"] = math.pow(2,0) + math.pow(2,2)
+            reverse["right"] = math.pow(2,1) + math.pow(2,3)
         else:
             reverse["right"] = 0
        
@@ -273,15 +273,15 @@ class smart_robotV12:
         ## setting up wheel velocity
         left  = int( abs( (left  * limit) + fricition_limit ) )
         right = int( abs( (right * limit) + fricition_limit ) )
-        print(" right_speed : {} , left_speed : {} ".format( right,left ) )
+        #print(" right_speed : {} , left_speed : {} ".format( right,left ) )
         
 
         speed = bytearray(b'\xFF\xFE')
         speed.append(0x02)
         speed += struct.pack('>h',self.clamp( left , min_speed, max_speed ))  # 2-bytes , velocity for V1
         speed += struct.pack('>h',self.clamp( right, min_speed, max_speed ))  # 2-bytes , velocity for V2
-        speed += struct.pack('>h',self.clamp( right, min_speed, max_speed ))  # 2-bytes , velocity for V3
-        speed += struct.pack('>h',self.clamp( left/10 , min_speed, max_speed ))  # 2-bytes , velocity for V4    
+        speed += struct.pack('>h',self.clamp( left, min_speed, max_speed ))  # 2-bytes , velocity for V3
+        speed += struct.pack('>h',self.clamp( right , min_speed, max_speed ))  # 2-bytes , velocity for V4    
         
         # 1-bytes , direction for x(bit2) ,y(bit1) ,z(bit0) ,and 0 : normal , 1 : reverse
         speed += struct.pack('>b',reverse["value"])  
@@ -414,15 +414,7 @@ class smart_robotV12:
             print("Send to omniboardV12 : {} ".format(binascii.hexlify(cmd)))
 
     def read_system_mode(self):
-        cmd = bytearray(b'\xFF\xFE') # Tx[0] , Tx[1]
-        cmd.append(0x80) # Tx[2]
-        cmd.append(0x80) # Tx[3]
-        cmd.append(0x19) # Tx[4]
-        cmd.append(0x00) # Tx[5]
-        cmd.append(0x00) # Tx[6]
-        cmd.append(0x00) # Tx[7]
-        cmd.append(0x00) # Tx[8]
-        cmd.append(0x00) # Tx[9]
+        cmd = bytearray(b'\xFF\xFE\x80\x80\x19\x00\x00\x00\x00\x00')
         if self.connected == True:       
             self.device.write(cmd)
             respond = []

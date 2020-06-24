@@ -28,11 +28,12 @@ class WheelsDriverNode(object):
         # turn_direct   (Bit10) : 0 -> normal    , 1 -> reverse
         # imu_reverse   (Bit11) : 0 -> normal    , 1 -> reverse    
         #================================================
-        self.driver.set_system_mode(vehicle=3,imu=0,
-                                    imu_axis=0,return_encoder=0,
-                                    command=0,motor_direct=0,
-                                    encoder_direct=1,turn_direct=0,
-                                    imu_reverse=0)
+        for index in range(2):
+            self.driver.set_system_mode(vehicle=3,imu=0,
+                                        imu_axis=0,return_encoder=0,
+                                        command=0,motor_direct=0,
+                                        encoder_direct=1,turn_direct=0,
+                                        imu_reverse=0)
 
         #add publisher for wheels command wih execution time
         self.msg_wheels_cmd = WheelsCmdStamped()

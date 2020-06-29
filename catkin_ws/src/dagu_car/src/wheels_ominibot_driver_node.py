@@ -8,8 +8,8 @@ class WheelsDriverNode(object):
         self.node_name = rospy.get_name()
         rospy.loginfo("[%s] Initializing " %(self.node_name))
         self.estop=False
-
-        self.port = "/dev/smart_robot_omnibotV12"
+        self.board_name = rospy.get_param("/board_name","smart_robot_omnibotV12")
+        self.port = "/dev/" + self.board_name
         self.baud = 115200
 
         # Setup publishers

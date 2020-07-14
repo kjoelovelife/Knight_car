@@ -8,8 +8,8 @@ class WheelsDriverNode(object):
         self.node_name = rospy.get_name()
         rospy.loginfo("[%s] Initializing " %(self.node_name))
         self.estop=False
-
-        self.port = "/dev/smart_robot_omnibotV12"
+        self.board_name = rospy.get_param("/board_name","smart_robot_omnibotV12")
+        self.port = "/dev/" + self.board_name
         self.baud = 115200
 
         # Setup publishers
@@ -28,6 +28,7 @@ class WheelsDriverNode(object):
         # turn_direct   (Bit10) : 0 -> normal    , 1 -> reverse
         # imu_reverse   (Bit11) : 0 -> normal    , 1 -> reverse    
         #================================================
+<<<<<<< HEAD
    
         for i in range(2):
             self.driver.set_system_mode(vehicle=3,imu=0,
@@ -36,6 +37,14 @@ class WheelsDriverNode(object):
                                         encoder_direct=0,turn_direct=0,
                                         imu_reverse=0) # use Ominibot V0.6
             time.sleep(0.3)
+=======
+        for index in range(2):
+            self.driver.set_system_mode(vehicle=3,imu=0,
+                                        imu_axis=0,return_encoder=0,
+                                        command=0,motor_direct=0,
+                                        encoder_direct=1,turn_direct=0,
+                                        imu_reverse=0)
+>>>>>>> 2c4b3dd33c54e295263e15739f83099e2413daae
 
         #add publisher for wheels command wih execution time
         self.msg_wheels_cmd = WheelsCmdStamped()

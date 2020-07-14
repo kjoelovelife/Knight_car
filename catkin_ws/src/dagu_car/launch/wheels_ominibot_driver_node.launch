@@ -1,5 +1,6 @@
 <launch>
     <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <param name="board_name" value="smart_robot_omnibotV12"/>
     <node ns="$(arg veh)" machine="$(arg veh)" pkg="dagu_car" type="wheels_ominibot_driver_node.py" name="wheels_driver_node" output="screen" clear_params="true" required="true"/>
     
     <!-- Subscriptions -->

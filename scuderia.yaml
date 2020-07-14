@@ -3,3 +3,6 @@ pimar:
 
 rosbotv1:
   name: icshop
+
+edu:
+  name: icshop

@@ -248,8 +248,7 @@ class smart_robotV12:
 
     # Knight_car Use
     def TT_motor_knightcar(self, left=0.0,right=0.0):
-      
-        max_speed = 10000
+        max_speed = 6500
         min_speed = 0
         reverse = { "right":0,"left":0,"value":0 }
         fricition_limit = 0
@@ -259,32 +258,32 @@ class smart_robotV12:
 
         ## setting up reverse
         if left < 0:
-            reverse["left"] = 0
-        else: 
             reverse["left"] = math.pow(2,0) + math.pow(2,2)
+        else: 
+            reverse["left"] = 0
         if right < 0 :
-            reverse["right"] = math.pow(2,1) + math.pow(2,3)
-        else:
             reverse["right"] = 0
+        else:
+            reverse["right"] = math.pow(2,1) + math.pow(2,3)
        
-        reverse["value"] = reverse["left"] + reverse["right"]
+        reverse["value"] = int(reverse["left"] + reverse["right"])
         #print("Direction : {}".format(reverse))
 
         ## setting up wheel velocity
-        left  = int( abs( (left  * limit) + fricition_limit ) )
-        right = int( abs( (right * limit) + fricition_limit ) )
+        left  = self.clamp(int( abs( (left  * limit) + fricition_limit ) ), min_speed, max_speed)
+        right = self.clamp(int( abs( (right * limit) + fricition_limit ) ), min_speed, max_speed)
         #print(" right_speed : {} , left_speed : {} ".format( right,left ) )
         
 
         speed = bytearray(b'\xFF\xFE')
         speed.append(0x02)
-        speed += struct.pack('>h',self.clamp( left , min_speed, max_speed ))  # 2-bytes , velocity for V1
-        speed += struct.pack('>h',self.clamp( right, min_speed, max_speed ))  # 2-bytes , velocity for V2
-        speed += struct.pack('>h',self.clamp( left, min_speed, max_speed ))  # 2-bytes , velocity for V3
-        speed += struct.pack('>h',self.clamp( right , min_speed, max_speed ))  # 2-bytes , velocity for V4    
+        speed += struct.pack('>H',left)  # 2-bytes , velocity for V1lsusb
+        speed += struct.pack('>H',right)  # 2-bytes , velocity for V2
+        speed += struct.pack('>H',left)  # 2-bytes , velocity for V3
+        speed += struct.pack('>H',right)  # 2-bytes , velocity for V4    
         
         # 1-bytes , direction for x(bit2) ,y(bit1) ,z(bit0) ,and 0 : normal , 1 : reverse
-        speed += struct.pack('>b',reverse["value"])  
+        speed += struct.pack('>B',reverse["value"])  
         # debug
         #print(binascii.hexlify(speed))
         if self.connected == True:       
@@ -406,7 +405,7 @@ class smart_robotV12:
         cmd.append(0x09) # Tx[4]
         cmd.append(0x00) # Tx[5]
         cmd.append(0x00) # Tx[6]
-        cmd += struct.pack('>h',mode) # Tx[7] ,Tx[8]
+        cmd += struct.pack('>h',int(mode)) # Tx[7] ,Tx[8]
         print("Omniboard write setting!")
         cmd.append(0x00) # Tx[9]
         if self.connected == True:       
@@ -449,8 +448,22 @@ class smart_robotV12:
             print("imu: {}".format(imu_decode))
 
 
-     
+if __name__ == '__main__':
+        port = "/dev/smart_robot_omnibotV12"
+        baud = 115200
 
-
-
+        # Setup publishers
+        robot = smart_robotV12(port,baud)
+        robot.connect()
+        for i in range(2):
+            robot.set_system_mode(vehicle=3,imu=0,
+                                        imu_axis=0,return_encoder=0,
+                                        command=0,motor_direct=0,
+                                        encoder_direct=0,turn_direct=0,
+                                        imu_reverse=0)
+            time.sleep(0.5)
+        robot.read_system_mode()
+        robot.TT_motor_knightcar(left=0.1,right=0.1)
+        time.sleep(1)
+        robot.TT_motor_knightcar(left=-0.1,right=-0.1) 
 

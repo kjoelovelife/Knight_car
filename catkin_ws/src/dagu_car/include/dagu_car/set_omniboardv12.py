@@ -111,8 +111,6 @@ if __name__ == '__main__':
     baud  = 115200
     robot = smart_robotV12(port,baud)
     robot.connect()
-    robot.read_system_mode()
-    
 
     ## set parameter
     mode = {'vehicle':0,'imu':0,'imu_axis':0,'return_encoder':0,'command':0,'motor_direct':0,'encoder_direct':0,'turn_direct':0,'imu_reverse':0 }  
@@ -161,7 +159,9 @@ if __name__ == '__main__':
                               command=mode["command"],motor_direct=mode["motor_direct"],
                               encoder_direct=mode["encoder_direct"],turn_direct=mode["turn_direct"],
                               imu_reverse=mode["imu_reverse"])
+        time.sleep(1)
 
     robot.write_setting()
+    robot.read_system_mode()
     robot.disconnect()
 

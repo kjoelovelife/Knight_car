@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import rospy
+import rospy , time
 from duckietown_msgs.msg import WheelsCmdStamped, BoolStamped
 from dagu_car.smart_robotV12_driver import smart_robotV12 #DaguWheelsDriver
 
@@ -16,8 +16,8 @@ class WheelsDriverNode(object):
         self.driver = smart_robotV12(self.port,self.baud)
         self.driver.connect()
        
-        # set system node ===============================
-        # vehicle       (Bit0)  : 0 -> omnibot   ; 1 -> Mecanum ; 2 --> encoder , angle param and no imu(1C) ; 3 --> encoder , no angle parameter and no imu(1D) ; 
+        # set system node  ===============================
+        # vehicle       (Bit0)  : 0 -> omnibot   ; 1 -> Mecanum ; 2 --> encoder , angle param and no imu(1C) ; 3 --> encoder , no angle parameter and no imu(1D) ( Ominibot V0.7 ) ; 
         #                         4 -->  no encoder , angle param , and no imu(1D) ; 5 --> no encoder , no angle parameter , and no imu(1D)
         # imu           (Bit3)  : 0 -> not to do , 1 -> do it
         # imu_axis      (Bit4)  : 0 -> not to do , 1 -> do it
@@ -28,11 +28,14 @@ class WheelsDriverNode(object):
         # turn_direct   (Bit10) : 0 -> normal    , 1 -> reverse
         # imu_reverse   (Bit11) : 0 -> normal    , 1 -> reverse    
         #================================================
-        self.driver.set_system_mode(vehicle=3,imu=0,
-                                    imu_axis=0,return_encoder=0,
-                                    command=0,motor_direct=0,
-                                    encoder_direct=1,turn_direct=0,
-                                    imu_reverse=0)
+   
+        for i in range(2):
+            self.driver.set_system_mode(vehicle=3,imu=0,
+                                        imu_axis=0,return_encoder=0,
+                                        command=0,motor_direct=0,
+                                        encoder_direct=0,turn_direct=0,
+                                        imu_reverse=0) # use Ominibot V0.6
+            time.sleep(0.3)
 
         #add publisher for wheels command wih execution time
         self.msg_wheels_cmd = WheelsCmdStamped()

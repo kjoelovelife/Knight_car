@@ -248,24 +248,24 @@ class smart_robotV12:
 
     # Knight_car Use
     def TT_motor_knightcar(self, left=0.0,right=0.0):
-        max_speed = 6500
+        max_speed = 6000
         min_speed = 0
         reverse = { "right":0,"left":0,"value":0 }
         fricition_limit = 0
         limit = 20000
 
-        #print("left motor : {} , right motor : {}".format( left , right ))
+        print("left motor : {} , right motor : {}\n".format( left , right ))
 
-        ## setting up reverse
-        if left < 0:
-            reverse["left"] = math.pow(2,0) + math.pow(2,2)
-        else: 
-            reverse["left"] = 0
-        if right < 0 :
+        ## setting up reverse , left motors are normal direction, right motors are reverse direction 
+        if right > 0:
+            reverse["right"] = math.pow(2,0) + math.pow(2,2)
+        else :
             reverse["right"] = 0
-        else:
-            reverse["right"] = math.pow(2,1) + math.pow(2,3)
-       
+        if left > 0:
+            reverse["left"] =  0
+        else :
+            reverse["left"] = math.pow(2,1) + math.pow(2,3)
+
         reverse["value"] = int(reverse["left"] + reverse["right"])
         #print("Direction : {}".format(reverse))
 
@@ -277,10 +277,10 @@ class smart_robotV12:
 
         speed = bytearray(b'\xFF\xFE')
         speed.append(0x02)
-        speed += struct.pack('>H',left)  # 2-bytes , velocity for V1lsusb
-        speed += struct.pack('>H',right)  # 2-bytes , velocity for V2
-        speed += struct.pack('>H',left)  # 2-bytes , velocity for V3
-        speed += struct.pack('>H',right)  # 2-bytes , velocity for V4    
+        speed += struct.pack('>H',right)  # 2-bytes , velocity for V1lsusb
+        speed += struct.pack('>H',left)  # 2-bytes , velocity for V2
+        speed += struct.pack('>H',right)  # 2-bytes , velocity for V3
+        speed += struct.pack('>H',left)  # 2-bytes , velocity for V4    
         
         # 1-bytes , direction for x(bit2) ,y(bit1) ,z(bit0) ,and 0 : normal , 1 : reverse
         speed += struct.pack('>B',reverse["value"])  
@@ -289,6 +289,7 @@ class smart_robotV12:
         if self.connected == True:       
             self.device.write(speed)
             #print("Reverse: {}".format(reverse))
+            time.sleep(0.01)
 
 
     def set_speed_limit(self , speed_limit):

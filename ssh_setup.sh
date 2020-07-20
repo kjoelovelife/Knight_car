@@ -31,6 +31,13 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
+####  manual setup stati ip ####
+# sudo touch /etc/rc.local
+# sudo chmod u+x /etc/rc.local
+# echo "#!/bin/bash sudo ifconfig eth0 down \n sleep 3 \n sudo ifconfig eth0 192.168.0.1 netmask 255.255.255.0 up" >> /etc/rc.local
+################################
+
+
 sudo apt-get install -y vim
 sudo apt-get install -y gedit
 sudo apt-get install -y 'ssh'

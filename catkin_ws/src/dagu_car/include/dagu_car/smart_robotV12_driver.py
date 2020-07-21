@@ -248,13 +248,13 @@ class smart_robotV12:
 
     # Knight_car Use
     def TT_motor_knightcar(self, left=0.0,right=0.0):
-        max_speed = 6000
+        max_speed = 5000
         min_speed = 0
         reverse = { "right":0,"left":0,"value":0 }
         fricition_limit = 0
         limit = 20000
 
-        print("left motor : {} , right motor : {}\n".format( left , right ))
+        #print("left motor : {} , right motor : {}\n".format( left , right ))
 
         ## setting up reverse , left motors are normal direction, right motors are reverse direction 
         if right > 0:

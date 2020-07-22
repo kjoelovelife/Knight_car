@@ -42,7 +42,8 @@ sudo apt install -y \
     i2c-tools \
     python-pip \
     python3-pip \
-    mosquitto-clients
+    mosquitto-clients \
+    net-tools
 
 
 #sudo python -m pip install --upgrade -pip

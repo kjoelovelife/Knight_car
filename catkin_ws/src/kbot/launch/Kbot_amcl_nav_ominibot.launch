@@ -2,7 +2,7 @@
 
 <launch>
 
-    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <!--<arg name="veh" doc="Name of vehicle. ex: megaman"/>-->
     <arg name="local" default="false" doc="true for running on laptop. false for running on vehicle."/>
     <arg name="config" default="baseline" doc="Specify a config."/>
     <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman." />
@@ -109,5 +109,5 @@
     </node>
 
    <!-- launch Kbot_nav_control_ominibot.launch -->
-   <include file="$(find kbot)/launch/Kbot_nav_control_ominibot.launch"/>
+   <!--<include file="$(find kbot)/launch/Kbot_nav_control_ominibot.launch"/>-->
 </launch>

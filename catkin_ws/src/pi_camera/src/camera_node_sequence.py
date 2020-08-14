@@ -33,6 +33,8 @@ class CameraNode(object):
         # Setup PiCamera
 
         self.camera = PiCamera()
+        self.camera.vflip = True
+        #self.camera.hflip = True
         self.framerate = self.framerate_high # default to high
         self.camera.framerate = self.framerate
         self.camera.resolution = (self.res_w,self.res_h)

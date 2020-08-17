@@ -21,7 +21,7 @@ class DaguWheelsDriver:
     SPEED_TOLERANCE = 1.e-2       # speed tolerance level
 
     def __init__(self, verbose=False, debug=False, left_flip=False, right_flip=False):
-        self.motorhat = Adafruit_MotorHAT(addr=0x60)
+        self.motorhat = Adafruit_MotorHAT(addr=0x60) # Ugeek motorhat : 0x6F , reference : http://www.icshop.com.tw/product-page.php?27572
         self.leftMotor = self.motorhat.getMotor(1)
         self.rightMotor = self.motorhat.getMotor(2)
         self.verbose = verbose or debug

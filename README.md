@@ -1,9 +1,9 @@
 # Knight_car
 
-<p align="center">
+<!--<p align="center">
   <img src="https://github.com/kungfrank/Knight_car/blob/master/IMG20180823161205.jpg" width="280"/>
   <img src="https://github.com/kungfrank/Knight_car/blob/master/IMG20180823161219_mh1535077740740.jpg" width="350"/>
-</p>
+</p>-->
 
 ## Introduction
 

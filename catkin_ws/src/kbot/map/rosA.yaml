@@ -1,4 +1,4 @@
-image: /home/east/rosA.pgm
+image: /home/icshop/Knight_car/catkin_ws/src/kbot/map/rosA.pgm
 resolution: 0.050000
 origin: [-50.000000, -50.000000, 0.000000]
 negate: 0

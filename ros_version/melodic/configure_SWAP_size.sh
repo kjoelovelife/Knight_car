@@ -35,7 +35,7 @@ fi
 ## you can use [ df -h ] to see how space you can use on microSD now
 #             [ free -h ] to see how space you can use with swap    
 
-size=4G
+size=1G
 sudo fallocate -l $size /swapfile
 sudo chmod 600 /swapfile
 ls -lh /swapfile

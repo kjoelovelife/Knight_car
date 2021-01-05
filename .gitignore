@@ -11,3 +11,5 @@ catkin_ws/src/semantic-mapping-arg
 catkin_ws/src/duckiedog
 catkin_ws/src/wearnavi
 catkin_ws/src/guidedog-code
+catkin_ws/devel
+catkin_ws/build

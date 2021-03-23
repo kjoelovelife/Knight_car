@@ -27,48 +27,20 @@
 #
 # -------------------------------------------------------------------------
 
-
-main_path="Jetson_nano"
-#sudo apt-get update
+sudo apt-get update
 
 #======= ste1. Enable i2c ===============
 # Enable i2c permissions
 sudo usermod -aG i2c $USER
 #===========================================
 
-
 #======== Step2. apt update and upgrade ==============================
 sudo apt-get update
-sudo apt install -y python3-pip python3-pil
+sudo apt install -y python3-pip python3-pil build-essential libssl-dev libffi-dev python3-dev
 sudo pip3 install cython
 #==============================================================
 
-#========= Step3. install tensorflow ==========================
-cd
-sudo apt-get install -y libhdf5-serial-dev \
-                        hdf5-tools \
-                        libhdf5-dev \
-                        zlib1g-dev \
-                        'zip' \
-                        libjpeg8-dev \
-                        liblapack-dev \
-                        libblas-dev \
-                        gfortran \
-                        libcanberra-gtk-module \
-                        libcanberra-gtk3-module
-sudo pip3 install -U pip testresources setuptools
-sudo pip3 install -U numpy==1.18.5 \
-                     future==0.17.1 \
-                     mock==3.0.5 \
-                     h5py==2.9.0 \
-                     keras_preprocessing==1.0.5 \
-                     keras_applications==1.0.8 \
-                     gast==0.2.2 \
-                     futures \
-                     protobuf \
-                     pybind11
-
-#======== Step6. install traitlets and jupyterlab  ============
+#======== Step3. install traitlets and jupyterlab  ============
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt -y install nodejs node-gyp 'gcc' g++ 'make'
@@ -93,20 +65,13 @@ echo $PASSWORD | sudo systemctl start jetbot_jupyter
 #sudo chmod 777 /usr/local/lib/python3.6/dist-packages/jetbot-0.3.0-py3.6.egg/jetbot/* -R
 #=======================================================================================
 
-#======= step8. configure Jetson nano GPIO =================
-sudo pip3 install Jetson.GPIO
-sudo apt-get -y install git-all
-cd ~/$main_path/driver
-git clone https://github.com/NVIDIA/jetson-gpio.git
-cd jetson-gpio
-sudo python3 setup.py install
-#===========================================================
-
-
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
 
 #===== setup wifi SSID ===============
+#sudo apt install network-manager
+#sudo systemctl start NetworkManager.service
+#sudo systemctl enable NetworkManager.service
 ## disconnect wifi
 #sudo nmcli device disconnect wlan0
 

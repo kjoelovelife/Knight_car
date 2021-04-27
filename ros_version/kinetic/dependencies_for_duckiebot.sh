@@ -6,6 +6,8 @@ set -x
 # rather than doing "pip install X".
 
 # 
+python get-pip.py
 pip install Adafruit_MotorHAT --user
+pip install RPi.GPIO --upgrade
 
 ./dependencies_common.sh

@@ -13,7 +13,7 @@
     <arg name="use_rviz" default="false" />
 
     <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find kbot)/map/$(map)"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find kbot)/map/$(arg map)"/>
 
     <!-- TF setting -->
 	<node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.06 0 0 0 /base_footprint /base_link 10"/>

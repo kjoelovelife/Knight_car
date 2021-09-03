@@ -10,26 +10,26 @@
 This repository contains all the software that runs on the Knightcar.
 Knightcar is a low-cost platform base on raspberry pi 3, comes with rpi3 official camera, wide-angle len, and YDlidar for learning autonomy.
 
-If you buy it from IcShop( https://www.icshop.com.tw/product_info.php/products_id/26775 ) , the password in image is 「 3924523 」.
+If you buy it from [iCShop](https://www.icshop.com.tw/product_info.php/products_id/26775) , the password in image is "3924523" or "075564686".
 
 ## reference
 
-MIT duckietown : https://github.com/duckietown/Software
+[MIT duckietown](https://github.com/duckietown/Software)
 
-NCTU duckietown : https://github.com/Duckietown-NCTU/Software
+[NCTU duckietown](https://github.com/Duckietown-NCTU/Software)
 
 ## Demo Video
 
-Navigation Demo Video: https://www.youtube.com/watch?v=UlBHKnV47X4
+[Navigation Demo Video](https://www.youtube.com/watch?v=UlBHKnV47X4)
 
 ## Developer
 
-*Pou-Chun, Kung (k3083518729@gmail.com)
+* [Pou-Chun, Kung](k3083518729@gmail.com)
 
 ## Collaborator
 
-*Wei-Chih, Lin (kjoelovelife@gmail.com)
+* [Joe, Lin](weichih.lin@protonmail.com)
 
 ## Usage & Tutorial
 
-Medium Notes: https://medium.com/@k3083518729/k-bot-a218c075e2ee
+[Medium Notes](https://medium.com/@k3083518729/k-bot-a218c075e2ee)
